@@ -1,30 +1,34 @@
 import Vue from "vue";
-import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Router from "vue-router";
+import PageSessions from "@/views/PageSessions";
+import SinglePageSession from "@/views/SinglePageSession";
 
-Vue.use(VueRouter);
+Vue.use(Router);
 
-const routes = [
-  {
-    path: "/",
-    name: "Home",
-    component: Home
-  },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
-  }
-];
-
-const router = new VueRouter({
+export default new Router({
   mode: "history",
-  base: process.env.BASE_URL,
-  routes
+  routes: [
+    {
+      path: "/",
+      name: "home",
+      component: PageSessions
+    },
+    {
+      path: "/sessions",
+      name: "sessions",
+      component: () =>
+        import(/* webpackChunkName: "live" */ "./../views/PageSessions.vue")
+    },
+    {
+      path: "/session/:id",
+      name: "session",
+      component: SinglePageSession
+    },
+    {
+      path: "/start",
+      name: "start",
+      component: () =>
+        import(/* webpackChunkName: "ask" */ "./../views/AddSession.vue")
+    }
+  ]
 });
-
-export default router;
